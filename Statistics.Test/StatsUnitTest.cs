@@ -1,7 +1,6 @@
 using System;
 using Xunit;
 using Statistics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Statistics.Test
 {
