@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using Xunit;
 using Statistics;
 
@@ -6,12 +8,13 @@ namespace Statistics.Test
 {
     public class StatsUnitTest
     {
+        public const double NaN = Double.NaN;
         [Fact]
         public void ReportsAverageMinMax()
         {
             var statsComputer = new StatsComputer();
             var computedStats = statsComputer.CalculateStatistics(
-                new List<double>{1.5, 8.9, 3.2, 4.5});
+                new List<float>{1.5F, 8.9F, 3.2F, 4.5F});
             float epsilon = 0.001F;
             Assert.True(Math.Abs(statsComputer.average - 4.525) <= epsilon);
             Assert.True(Math.Abs(statsComputer.max - 8.9) <= epsilon);
@@ -26,9 +29,9 @@ namespace Statistics.Test
             //All fields of computedStats (average, max, min) must be
             //Double.NaN (not-a-number), as described in
             //https://docs.microsoft.com/en-us/dotnet/api/system.double.nan?view=netcore-3.1
-            Assert.True(computedStats.average.Equals(double.NaN));
-            Assert.True(computedStats.max.Equals(double.NaN));
-            Assert.True(computedStats.min.Equals(double.NaN));
+            Assert.True(statsComputer.average.Equals((float)NaN));
+            Assert.True(statsComputer.max.Equals((float)NaN));
+            Assert.True(statsComputer.min.Equals((float)NaN));
         }
         [Fact]
         public void RaisesAlertsIfMaxIsMoreThanThreshold()
@@ -37,9 +40,9 @@ namespace Statistics.Test
             var ledAlert = new LEDAlert();
             IAlerter[] alerters = {emailAlert, ledAlert};
 
-            const float maxThreshold = 10.2;
+            const float maxThreshold = 10.2F;
             var statsAlerter = new StatsAlerter(maxThreshold, alerters);
-            statsAlerter.checkAndAlert(new List<float>{0.2, 11.9, 4.3, 8.5});
+            statsAlerter.checkAndAlert(new List<float>{0.2F, 11.9F, 4.3F, 8.5F});
 
             Assert.True(emailAlert.emailSent);
             Assert.True(ledAlert.ledGlows);
