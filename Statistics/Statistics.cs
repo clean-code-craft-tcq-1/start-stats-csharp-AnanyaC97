@@ -7,18 +7,19 @@ namespace Statistics
     public class StatsComputer
     {
 
-        public double average = 0.0;
-        public double max = 0.0;
-        public double min = 0.0;
+        public float average = 0;
+        public float max = 0;
+        public float min = 0;
         public const double NaN = Double.NaN;
-        public List<double> CalculateStatistics(List<double> numbers)
+
+        public List<float> CalculateStatistics(List<float> numbers)
         {
             //Implement statistics here
             if (numbers.Count == 0)
             {
-                average = NaN;
-                max = NaN;
-                min = NaN;
+                average = (float)NaN;
+                max = (float)NaN;
+                min = (float)NaN;
             }
             else
             {
@@ -27,12 +28,11 @@ namespace Statistics
                 min = numbers.Min();
             }
 
-            List<double> results = new List<double> { average, max, min };
+            List<float> results = new List<float> { average, max, min };
             return results;
         }
     }
 
-    
     public interface IAlerter
     {
         void alert();
@@ -64,9 +64,9 @@ namespace Statistics
             this.alerters = alerters;
         }
 
-        public void checkAndAlert(List<float> numbers)
+        public void checkAndAlert(List<float> values)
         {
-            if (numbers.Max() >= maxThreshold)
+            if ((values.Max()) >= maxThreshold)
             {
                 foreach (var alertVariable in alerters)
                 {
